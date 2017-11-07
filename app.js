@@ -8,6 +8,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+
 configRoutes(app);
 
 app.listen(3000, () => {
