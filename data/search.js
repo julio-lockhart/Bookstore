@@ -4,15 +4,32 @@ const constants = require('../utilities/constants');
 const searchForBooks = async(bookTitle) => {
     if (!bookTitle) throw "Must provide a book title to search for."
 
-    let searchUrl = constants.URLS.SEARCH_URL + bookTitle;
-    let response = await axios.get(searchUrl)
-        .catch(function (error) {
-            throw error;
-        });
+    let searchUrl = constants.URLS.SEARCH_URL + encodeURIComponent(bookTitle);
 
-    return response.data;
+    try {
+        const response = await axios.get(searchUrl);
+        const data = response.data;
+        return data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+const searchByCategory = async(category) => {
+    if (!category) throw "Must provide a category.";
+
+    let searchUrl = constants.URLS.CATEGORY_URL + category;
+
+    try {
+        const response = await axios.get(searchUrl);
+        const data = response.data;
+        return data;
+    } catch (error) {
+        throw error;
+    }
 };
 
 module.exports = {
-    searchForBooks: searchForBooks
+    searchForBooks: searchForBooks,
+    searchByCategory: searchByCategory
 };
