@@ -8,14 +8,8 @@ const searchAPI = data.search;
 router.get("/", async(req, res) => {
     await searchAPI.searchForBooks("*")
         .then((result) => {
-
-            // Testing render
-            let data = {
-                url: result[0].volumeInfo.imageLinks.thumbnail
-            };
-
             res.render("landingPage/static", {
-                data
+                result
             });
         })
         .catch(error => res.status(500).json({
