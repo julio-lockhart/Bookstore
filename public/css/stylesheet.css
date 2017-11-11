@@ -1,0 +1,79 @@
+body {
+  padding-top: 54px;
+}
+
+.jumbotron {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  margin-bottom: 0;
+  background-color: #fff;
+  background: url("../img/banner.jpg") no-repeat center center;
+  background-size: cover;
+}
+
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
+
+.jumbotron-heading {
+  margin: 0;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+  font-size: 5em;
+  color: white;
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+}
+
+.jumbotron .text-muted {
+  color: white!important;
+}
+
+.row-fluid {
+  margin-top: 20px;
+}
+
+#custom-search-input {
+  margin: 0;
+  margin-top: 10px;
+  padding: 0;
+}
+
+#custom-search-input .search-query {
+  padding-right: 3px;
+  padding-right: 4px \9;
+  padding-left: 3px;
+  padding-left: 4px \9;
+  /* IE7-8 doesn't have border-radius, so don't indent the padding */
+  margin-bottom: 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#custom-search-input button {
+  border: 0;
+  background: none;
+  /** belows styles are working good */
+  padding: 2px 5px;
+  margin-top: 2px;
+  position: relative;
+  left: -28px;
+  /* IE7-8 doesn't have border-radius, so don't indent the padding */
+  margin-bottom: 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #D9230F;
+}
+
+.search-query:focus+button {
+  z-index: 3;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}

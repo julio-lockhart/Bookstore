@@ -8,7 +8,7 @@ const searchForBooks = async(bookTitle) => {
 
     try {
         const response = await axios.get(searchUrl);
-        const data = response.data;
+        const data = response.data.items;
         return data;
     } catch (error) {
         throw error;

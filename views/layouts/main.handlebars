@@ -9,35 +9,109 @@
 
     <title>Bookstore</title>
 
-    <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../public/css/album.css">
+    <!-- Add Bootstrap library -->
+    <link rel="stylesheet" href="../../public/vendor/bootstrap/css/bootstrap.min.css">
+
+    <!-- Add custom css -->
+    <link rel="stylesheet" href="../../public/css/stylesheet.css">
+
+    <!-- Add icon library -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous">
 </head>
 
 <body>
-    <section class="jumbotron text-center">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <h1 class="jumbotron-heading">Chapter One</h1>
-            <p class="lead text-muted">All Stories Begin with Chapter One</p>
-        </div>
-    </section>
+            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <div class="album text-muted">
-        {{{body}}}
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row-fluid">
+            <div>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for a book title...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Search</button>
+                    </span>
+                </div>
+                <!-- /input-group -->
+            </div>
+            <!-- /.col-lg-6 -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <div class="col-lg-3">
+                <h1 class="my-4">Shop Name</h1>
+                <div class="list-group">
+                    <a href="#" class="list-group-item">Category 1</a>
+                    <a href="#" class="list-group-item">Category 2</a>
+                    <a href="#" class="list-group-item">Category 3</a>
+                </div>
+            </div>
+            <!-- /.col-lg-3 -->
+
+            <div class="col-lg-9">
+                <div class="row my-4">
+                    <div class="col-lg-12">
+                        <div>
+                            <section class="jumbotron text-center">
+                                <h1 class="jumbotron-heading">Chapter One</h1>
+                                <p class="lead text-muted">All Stories Begin with Chapter One</p>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <section>
+                    {{{body}}}
+                </section>
+
+            </div>
+            <!-- /.col-lg-9 -->
+        </div>
+        <!-- /.row -->
     </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+        </div>
+        <!-- /Footer -->
+    </footer>
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
-
-    <script src="../../public/js/vendor/holder.min.js"></script>
-    <script>
-        $(function () {
-            Holder.addTheme("thumb", {
-                background: "#55595c",
-                foreground: "#eceeef",
-                text: "Thumbnail"
-            });
-        });
-    </script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
         crossorigin="anonymous"></script>

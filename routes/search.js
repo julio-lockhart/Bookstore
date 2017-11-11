@@ -6,13 +6,21 @@ const data = require('../data');
 const searchAPI = data.search;
 
 router.get("/", async(req, res) => {
-    // await searchAPI.searchForBooks("*")
-    //     .then(result => res.json(result))
-    //     .catch(error => res.status(500).json({
-    //         "error": error
-    //     }));
+    await searchAPI.searchForBooks("*")
+        .then((result) => {
 
-    res.render("landingPage/static", {});
+            // Testing render
+            let data = {
+                url: result[0].volumeInfo.imageLinks.thumbnail
+            };
+
+            res.render("landingPage/static", {
+                data
+            });
+        })
+        .catch(error => res.status(500).json({
+            "error": error
+        }));
 });
 
 router.get("/search/:bookTitle", async(req, res) => {
