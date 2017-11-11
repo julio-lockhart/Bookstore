@@ -10,6 +10,7 @@ const Handlebars = require('handlebars');
 
 const handlebarsInstance = exphbs.create({
     defaultLayout: 'main',
+    partialsDir: "views/partials/",
     // Specify helpers which are only registered on this instance.
     helpers: {
         asJSON: (obj, spacing) => {
