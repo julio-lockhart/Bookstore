@@ -36,10 +36,20 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
 };
 
 app.use("/public", static);
+
+/**bodyParser.json(options)
+ * Parses the text as JSON and exposes the resulting object on req.body.
+ */
 app.use(bodyParser.json());
+
+/** bodyParser.urlencoded(options)
+ * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
+ * and exposes the resulting object (containing the keys and values) on req.body
+ */
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
 app.use(rewriteUnsupportedBrowserMethods);
 
 app.engine('handlebars', handlebarsInstance.engine);
