@@ -39,10 +39,21 @@ const extractBookInformation = async(books) => {
         let bookInfo = {};
 
         // Checking for the Title
-        if (books[i].volumeInfo.title !== "" || books[i].volumeInfo.title !== undefined) {
-            bookInfo.title = books[i].volumeInfo.title;
+        if ('title' in books[i].volumeInfo) {
+            if (books[i].volumeInfo.title !== "" || books[i].volumeInfo.title !== undefined) {
+                bookInfo.title = books[i].volumeInfo.title;
+            } else {
+                bookInfo.title = "";
+            }
+        }
+
+        // Checking for the Book's Image
+        if ('description' in books[i].volumeInfo) {
+            let description = books[i].volumeInfo.description;
+            let newDescription = description.substring(0, 79) + "...";
+            bookInfo.description = newDescription
         } else {
-            bookInfo.title = "";
+            bookInfo.description = "";
         }
 
         // Checking for the Book's Image
@@ -53,10 +64,12 @@ const extractBookInformation = async(books) => {
         }
 
         // Checking for the Author(s)
-        if (books[i].volumeInfo.authors.length > 0) {
-            bookInfo.authors = books[i].volumeInfo.authors.join();
-        } else {
-            bookInfo.authors = "";
+        if ('authors' in books[i].volumeInfo) {
+            if (books[i].volumeInfo.authors.length > 0) {
+                bookInfo.authors = books[i].volumeInfo.authors.join();
+            } else {
+                bookInfo.authors = "";
+            }
         }
 
         // Checking for the Price
