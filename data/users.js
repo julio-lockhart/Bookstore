@@ -36,7 +36,9 @@ const insertNewUser = async(userData) => {
         firstName: userData.firstNameInput,
         lastName: userData.lastNameInput,
         email: userData.emailInput,
-        password: bcrypt.hashSync(userData.passwordInput)
+        password: bcrypt.hashSync(userData.passwordInput),
+        shoppingCart: [],
+        purchases: []
     };
 
     const insertInfo = await users.insertOne(newUser);
