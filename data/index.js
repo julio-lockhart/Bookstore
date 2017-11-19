@@ -1,5 +1,7 @@
 const searchData = require('./search');
+const usersData = require('./users');
 
 module.exports = {
-    search: searchData
+    search: searchData,
+    users: usersData
 }
