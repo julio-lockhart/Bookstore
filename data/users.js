@@ -3,7 +3,7 @@ const usersCollection = mongoCollection.users;
 const uuidv4 = require('uuid/v4');
 const bcrypt = require('bcrypt-nodejs');
 
-const getUserByEmail = async(userEmail) => {
+const findByUsername = async(userEmail) => {
     const users = await usersCollection();
     const userItem = await users.findOne({
         email: userEmail
@@ -16,7 +16,7 @@ const getUserByEmail = async(userEmail) => {
     }
 };
 
-const getUserByID = async(id) => {
+const findUserByID = async(id) => {
     const users = await usersCollection();
     const userItem = await users.findOne({
         _id: id
@@ -44,12 +44,12 @@ const insertNewUser = async(userData) => {
     const insertInfo = await users.insertOne(newUser);
     if (insertInfo.insertedCount == 0) throw "Could not add new user";
 
-    const item = await getUserByID(insertInfo.insertedId);
+    const item = await findUserByID(insertInfo.insertedId);
     return item;
 };
 
 module.exports = {
-    getUserByEmail: getUserByEmail,
-    getUserByID: getUserByID,
+    findByUsername: findByUsername,
+    findUserByID: findUserByID,
     insertNewUser: insertNewUser
 };

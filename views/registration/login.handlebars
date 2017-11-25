@@ -1,0 +1,32 @@
+<div class="col-lg-8 col-centered">
+    <form class="form-signin" action="/login" method="post">
+        <div class="form-group">
+            <h2 class="form-signin-heading">Please sign in</h2>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" value="john.doe@email.com">
+        </div>
+
+        <div class="form-group">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" value="12345">
+        </div>
+
+        {{!--
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input value="remember-me" type="checkbox"> Remember me
+                </label>
+            </div>
+        </div> --}}
+
+        <div class="col-lg-8 col-centered">
+            <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </div>
+        </div>
+    </form>
+</div>

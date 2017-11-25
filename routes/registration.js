@@ -11,7 +11,7 @@ router.post("/", async(req, res) => {
     let data = req.body;
     console.log(data);
 
-    await usersAPI.getUserByEmail(data.emailInput)
+    await usersAPI.findByUsername(data.emailInput)
         .then(result => {
             if (!result) {
                 usersAPI.insertNewUser(data)
