@@ -62,13 +62,22 @@ const extractBookInformation = async(books) => {
             }
         }
 
-        // Checking for the Book's Image
+        // Checking for the Book's Description
         if ('description' in books[i].volumeInfo) {
             let description = books[i].volumeInfo.description;
-            //let newDescription = description.substring(0, 79) + "...";
-            bookInfo.description = description
+            bookInfo.description = description;
         } else {
             bookInfo.description = "";
+        }
+
+        // Checking Text Snippet
+        if ('searchInfo' in books[i].volumeInfo) {
+            bookInfo.textSnippet = books[i].volumeInfo.textSnippet;
+        } else {
+            if (bookInfo.description !== "") {
+                let description = bookInfo.description;
+                bookInfo.textSnippet = description.substring(0, 79) + "...";
+            }
         }
 
         // Checking for the Book's Image
@@ -120,6 +129,20 @@ const extractBookInformation = async(books) => {
             bookInfo.categories = books[i].volumeInfo.categories;
         } else {
             bookInfo.categories = [];
+        }
+
+        // Checking for Average Rating
+        if ('averageRating' in books[i].volumeInfo) {
+            bookInfo.averageRating = books[i].volumeInfo.averageRating;
+        } else {
+            bookInfo.averageRating = Math.floor(Math.random() * 6); // returns a number between 0 and 5
+        }
+
+        // Checking for Average Rating
+        if ('ratingsCount' in books[i].volumeInfo) {
+            bookInfo.ratingsCount = books[i].volumeInfo.ratingsCount;
+        } else {
+            bookInfo.ratingsCount = Math.floor(Math.random() * 10000); // returns a number between 0 and 5
         }
 
         // Check for the ISBN

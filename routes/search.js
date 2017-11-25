@@ -44,7 +44,9 @@ router.get("/search/isbn/:isbn", async(req, res) => {
                 publishedDate: result.publishedDate,
                 pageCount: result.pageCount,
                 price: result.price,
-                categories: result.categories
+                categories: result.categories,
+                averageRating: result.averageRating,
+                ratingsCount: result.ratingsCount
             });
         })
         .catch(error => res.status(500).json({
