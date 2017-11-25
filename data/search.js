@@ -30,6 +30,21 @@ const searchByCategory = async(category) => {
     }
 };
 
+const searchByISBN = async(isbn) => {
+    if (!isbn) throw "Could not searchByISBN. It was null";
+
+    let searchUrl = constants.URLS.ISBN_URL + isbn;
+
+    try {
+        const response = await axios.get(searchUrl);
+        const data = response.data.items;
+        const formattedBookInfo = await extractBookInformation(data);
+        return formattedBookInfo[0];
+    } catch (error) {
+        throw error;
+    }
+};
+
 const extractBookInformation = async(books) => {
     if (!books) throw "Books is null";
 
@@ -50,8 +65,8 @@ const extractBookInformation = async(books) => {
         // Checking for the Book's Image
         if ('description' in books[i].volumeInfo) {
             let description = books[i].volumeInfo.description;
-            let newDescription = description.substring(0, 79) + "...";
-            bookInfo.description = newDescription
+            //let newDescription = description.substring(0, 79) + "...";
+            bookInfo.description = description
         } else {
             bookInfo.description = "";
         }
@@ -79,6 +94,41 @@ const extractBookInformation = async(books) => {
             bookInfo.price = 20.00;
         }
 
+        // Checking for Publisher
+        if ('publisher' in books[i].volumeInfo) {
+            bookInfo.publisher = books[i].volumeInfo.publisher;
+        } else {
+            bookInfo.publisher = "";
+        }
+
+        // Checking for Published Data
+        if ('publishedDate' in books[i].volumeInfo) {
+            bookInfo.publishedDate = books[i].volumeInfo.publishedDate;
+        } else {
+            bookInfo.publishedDate = "";
+        }
+
+        // Checking for Page Count
+        if ('pageCount' in books[i].volumeInfo) {
+            bookInfo.pageCount = books[i].volumeInfo.pageCount;
+        } else {
+            bookInfo.pageCount = "";
+        }
+
+        // Checking for Categories
+        if ('categories' in books[i].volumeInfo) {
+            bookInfo.categories = books[i].volumeInfo.categories;
+        } else {
+            bookInfo.categories = [];
+        }
+
+        // Check for the ISBN
+        if ('industryIdentifiers' in books[i].volumeInfo) {
+            bookInfo.isbn = books[i].volumeInfo.industryIdentifiers[0].identifier;
+        } else {
+            return;
+        }
+
         formattedBookInfoList.push(bookInfo);
     }
 
@@ -87,5 +137,6 @@ const extractBookInformation = async(books) => {
 
 module.exports = {
     searchForBooks: searchForBooks,
-    searchByCategory: searchByCategory
+    searchByCategory: searchByCategory,
+    searchByISBN: searchByISBN
 };

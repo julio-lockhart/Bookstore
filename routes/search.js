@@ -27,8 +27,36 @@ router.post("/search", async(req, res) => {
     }
 });
 
+router.get("/search/isbn/:isbn", async(req, res) => {
+    let isbn = req.params.isbn;
+
+    if (!isbn) throw "ISBN was null";
+
+    await searchAPI.searchByISBN(isbn)
+        .then((result) => {
+            console.log(result);
+            res.render("bookView/static", {
+                title: result.title,
+                author: result.authors,
+                description: result.description,
+                imageURL: result.imageURL.replace("zoom=1", "zoom=2"),
+                publisher: result.publisher,
+                publishedDate: result.publishedDate,
+                pageCount: result.pageCount,
+                price: result.price,
+                categories: result.categories
+            });
+        })
+        .catch(error => res.status(500).json({
+            "error": error
+        }));
+});
+
 router.get("/search/:bookTitle", async(req, res) => {
-    await searchAPI.searchForBooks(req.params.bookTitle)
+    let bookTitle = req.params.bookTitle;
+    if (!bookTitle) throw "Book title was null";
+
+    await searchAPI.searchForBooks(bookTitle)
         .then(result => {
             res.render("landingPage/static", {
                 result

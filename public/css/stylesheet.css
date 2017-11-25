@@ -54,6 +54,11 @@ body {
   margin-bottom: 20px;
 }
 
+.col-centered {
+  float: none;
+  margin: 0 auto;
+}
+
 #custom-search-input .search-query {
   padding-right: 3px;
   padding-right: 4px \9;
