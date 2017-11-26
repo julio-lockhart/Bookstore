@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const authenticationMiddleware = require('../config/authentication')
+let Strategy = require('passport-local').Strategy;
 
 router.get("/", (req, res) => {
     res.render("registration/login", {});
@@ -14,21 +16,24 @@ router.post("/", (req, res, next) => {
             });
         }
 
-        console.log(req.body);
-
         if (!user) {
             console.log(info);
         } else {
             console.log("User Login Good");
-        }
 
-        // if (!user) {
-        //     res.redirect("/");
-        // } else {
-        //     console.log("User Login Good");
-        //     req.session.user = user;
-        // }
+            req.logIn(user, function (err) {
+                if (err) {
+                    return next(err);
+                }
+
+                console.log("Log In Good");
+                console.log(req.user);
+                res.redirect("/");
+            });
+        }
     })(req, res, next);
 });
+
+
 
 module.exports = router;

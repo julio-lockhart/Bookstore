@@ -3,16 +3,16 @@ const usersCollection = mongoCollection.users;
 const uuidv4 = require('uuid/v4');
 const bcrypt = require('bcrypt-nodejs');
 
-const findByUsername = async(userEmail) => {
+const findByEmail = async(userEmail, callback) => {
     const users = await usersCollection();
-    const userItem = await users.findOne({
+    const user = await users.findOne({
         email: userEmail
     });
 
-    if (!userItem) {
-        return null;
+    if (user) {
+        callback(null, user);
     } else {
-        return userItem;
+        callback("User does not exist", null);
     }
 };
 
@@ -49,7 +49,7 @@ const insertNewUser = async(userData) => {
 };
 
 module.exports = {
-    findByUsername: findByUsername,
+    findByEmail: findByEmail,
     findUserByID: findUserByID,
     insertNewUser: insertNewUser
 };

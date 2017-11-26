@@ -9,9 +9,8 @@ router.get("/", (req, res) => {
 
 router.post("/", async(req, res) => {
     let data = req.body;
-    console.log(data);
 
-    await usersAPI.findByUsername(data.emailInput)
+    await usersAPI.findByEmail(data.emailInput)
         .then(result => {
             if (!result) {
                 usersAPI.insertNewUser(data)

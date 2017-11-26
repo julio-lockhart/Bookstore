@@ -6,9 +6,13 @@ const data = require('../data');
 const searchAPI = data.search;
 
 router.get("/", async(req, res) => {
+
+    let isUserAuthenticated = (req.user != null) ? true : false;
+
     await searchAPI.searchForBooks("*")
         .then((result) => {
             res.render("landingPage/static", {
+                isUserAuthenticated: isUserAuthenticated,
                 result
             });
         })
@@ -34,7 +38,6 @@ router.get("/search/isbn/:isbn", async(req, res) => {
 
     await searchAPI.searchByISBN(isbn)
         .then((result) => {
-            console.log(result);
             res.render("bookView/static", {
                 title: result.title,
                 author: result.authors,
