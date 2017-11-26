@@ -1,5 +1,10 @@
-<div class="center">
-    <div class="container py-3">
+<div class="container" style="margin-top: 20px">
+    <h3>
+        Shopping Cart</h3>
+    <hr />
+</div>
+<div class="row">
+    <div class="col-md-7">
         {{#each cart}}
         <div class="card" style="margin-bottom: 20px">
             <div class="row">
@@ -30,4 +35,19 @@
         </div>
         {{/each}}
     </div>
+
+    <div class="col-md-5">
+
+        <!-- Search Widget -->
+        <div class="card my-4">
+            <h5 class="card-header">Cart Details</h5>
+            <div class="card-body">
+                <h3>Number of Items: {{numOfItems}}</h3>
+                <h3>Total: ${{totalAmount}}</h3>
+
+                <button type="button" class="btn btn-primary btn-lg btn-block">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
 </div>
