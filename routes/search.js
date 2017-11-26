@@ -8,11 +8,20 @@ const searchAPI = data.search;
 router.get("/", async(req, res) => {
 
     let isUserAuthenticated = (req.user != null) ? true : false;
+    console.log(isUserAuthenticated);
+
+    let isCartEmpty = true;
+    if (isUserAuthenticated) {
+        if (req.user.shoppingCart > 0) {
+            isCartEmpty = false;
+        }
+    }
 
     await searchAPI.searchForBooks("*")
         .then((result) => {
             res.render("landingPage/static", {
                 isUserAuthenticated: isUserAuthenticated,
+                isCartEmpty: isCartEmpty,
                 result
             });
         })

@@ -5,7 +5,7 @@ const authenticationMiddleware = require('../config/authentication')
 let Strategy = require('passport-local').Strategy;
 
 router.get("/", (req, res) => {
-    res.render("registration/login", {});
+    res.render("login/login", {});
 });
 
 router.post("/", (req, res, next) => {
