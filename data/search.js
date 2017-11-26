@@ -149,7 +149,7 @@ const extractBookInformation = async(books) => {
         if ('industryIdentifiers' in books[i].volumeInfo) {
             bookInfo.isbn = books[i].volumeInfo.industryIdentifiers[0].identifier;
         } else {
-            return;
+            continue;
         }
 
         formattedBookInfoList.push(bookInfo);

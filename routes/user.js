@@ -8,7 +8,9 @@ router.get("/account", (req, res) => {
     if (!user) {
         res.redirect("/login");
     } else {
-        res.json(user);
+        res.render("userInfo/account", {
+            user
+        });
     }
 });
 
@@ -18,7 +20,9 @@ router.get("/shoppingCart", (req, res) => {
     if (!user) {
         res.redirect("/login");
     } else {
-        res.json(user.shoppingCart);
+        res.render("userInfo/shoppingCart", {
+            cart: user.shoppingCart
+        });
     }
 });
 
@@ -28,7 +32,9 @@ router.get("/purchases", (req, res) => {
     if (!user) {
         res.redirect("/login");
     } else {
-        res.json(user.purchases);
+        res.render("userInfo/purchases", {
+            purchases: user.purchases
+        });
     }
 });
 
