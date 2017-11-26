@@ -4,11 +4,12 @@ const axios = require('axios');
 
 const data = require('../data');
 const searchAPI = data.search;
+const userAPI = data.users;
 
 router.get("/", async(req, res) => {
 
     let isUserAuthenticated = (req.user != null) ? true : false;
-    console.log(isUserAuthenticated);
+    console.log("Is User Authenticated: " + isUserAuthenticated);
 
     let isCartEmpty = true;
     if (isUserAuthenticated) {
@@ -51,6 +52,7 @@ router.get("/search/isbn/:isbn", async(req, res) => {
                 title: result.title,
                 author: result.authors,
                 description: result.description,
+                isbn: result.isbn,
                 imageURL: result.imageURL.replace("zoom=1", "zoom=2"),
                 publisher: result.publisher,
                 publishedDate: result.publishedDate,
@@ -88,5 +90,26 @@ router.get("/category/:category", async(req, res) => {
             "error": error
         }));
 });
+
+router.post("/addToCart/:isbn", async(req, res, next) => {
+    let isbn = req.params.isbn;
+    let user = req.user;
+
+    try {
+        if (user != null) {
+            let book = await searchAPI.searchByISBN(isbn);
+            let updateStatus = await userAPI.addToCart(user.email, book);
+            console.log("Update Status: " + updateStatus);
+
+            // Redirect back to the main page and show that adding to cart was successful
+            if (updateStatus) {
+                res.redirect("/user/shoppingCart");
+            }
+        }
+    } catch (e) {
+        next(e);
+    }
+});
+
 
 module.exports = router;

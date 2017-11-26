@@ -41,7 +41,9 @@
             </div>
 
             <div style="padding-top: 20px">
-                <button type="button" class="btn btn-primary">Add to Cart</button>
+                <form method="post" action="/addToCart/{{isbn}}">
+                    <button type="submit" name="addToCart" class="btn btn-primary" value="{{isbn}}">Add to Cart</button>
+                </form>
             </div>
 
             <hr>
@@ -62,7 +64,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search for...">
                         <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button">Go!</button>
+                            <button class="btn btn-secondary" type="button">Search</button>
                         </span>
                     </div>
                 </div>
@@ -91,7 +93,7 @@
                 <h5 class="card-header">Rating</h5>
                 <div class="card-body">
                     <p>
-                        <small>Average Rating: </small> {{averageRating}}/5
+                        <small>Average Rating: </small> {{averageRating}} out of 5
                     </p>
 
                     <p>
@@ -99,7 +101,6 @@
                     </p>
                 </div>
             </div>
-
         </div>
 
     </div>

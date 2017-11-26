@@ -8,7 +8,7 @@ router.get("/account", (req, res) => {
     if (!user) {
         res.redirect("/login");
     } else {
-        res.render("userInfo/account", {
+        res.render("user/account", {
             user
         });
     }
@@ -20,7 +20,7 @@ router.get("/shoppingCart", (req, res) => {
     if (!user) {
         res.redirect("/login");
     } else {
-        res.render("userInfo/shoppingCart", {
+        res.render("user/shoppingCart", {
             cart: user.shoppingCart
         });
     }
@@ -32,10 +32,24 @@ router.get("/purchases", (req, res) => {
     if (!user) {
         res.redirect("/login");
     } else {
-        res.render("userInfo/purchases", {
+        res.render("user/purchases", {
             purchases: user.purchases
         });
     }
 });
 
 module.exports = router;
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/');
+}
+
+function notLoggedIn(req, res, next) {
+    if (!req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/');
+}

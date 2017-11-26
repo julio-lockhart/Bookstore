@@ -2,6 +2,7 @@ const mongoCollection = require('../config/mongo/mongoCollections');
 const usersCollection = mongoCollection.users;
 const uuidv4 = require('uuid/v4');
 const bcrypt = require('bcrypt-nodejs');
+const lodash = require('lodash');
 
 const findByEmail = async(userEmail, callback) => {
     const users = await usersCollection();
@@ -48,8 +49,49 @@ const insertNewUser = async(userData) => {
     return item;
 };
 
+const addToCart = async(userEmail, bookItem) => {
+    const userCollection = await usersCollection();
+    const user = await userCollection.findOne({
+        email: userEmail
+    });
+
+    if (user) {
+        // Check if the book added to the cart is already in their shopping cart.
+        let isBookInCart = lodash.filter(user.shoppingCart, x => x.isbn === bookItem.isbn);
+
+        // If the book exists, update the quantity, otherwise, add it to the cart
+        if (!Array.isArray(isBookInCart) || isBookInCart.length > 0) {
+            let status = await updateQuantity(user, bookItem.isbn, 1);
+            if (status.result.ok === 1) {
+                return true;
+            } else {
+                throw "Unable to update shopping cart";
+            }
+        }
+    }
+};
+
+const updateQuantity = async(user, isbn, updateQuantity) => {
+
+    if (!user) throw "UpdateQuanity expected a user";
+    if (!isbn) throw "UpdateQuanity expected an isbn";
+    if (!updateQuantity) throw "UpdateQuanity expected a updateQuantity";
+
+    const userCollection = await usersCollection();
+
+    return await userCollection.update({
+        email: user.email,
+        "shoppingCart.isbn": isbn
+    }, {
+        $inc: {
+            "shoppingCart.$.quantity": 1
+        }
+    });
+};
+
 module.exports = {
     findByEmail: findByEmail,
     findUserByID: findUserByID,
-    insertNewUser: insertNewUser
+    insertNewUser: insertNewUser,
+    addToCart: addToCart
 };

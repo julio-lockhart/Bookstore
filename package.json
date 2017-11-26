@@ -26,6 +26,7 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "hbs": "^4.0.1",
+    "lodash": "^4.17.4",
     "mongodb": "^2.2.33",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
