@@ -61,7 +61,35 @@ const addToCart = async(userEmail, bookItem) => {
 
         // If the book exists, update the quantity, otherwise, add it to the cart
         if (!Array.isArray(isBookInCart) || isBookInCart.length > 0) {
-            let status = await updateQuantity(user, bookItem.isbn, 1);
+            let status = await incrementQuantity(user, bookItem.isbn, 1);
+            if (status.result.ok === 1) {
+                return true;
+            } else {
+                throw "Unable to update shopping cart";
+            }
+        } else {
+            let status = await userCollection.update({
+                email: user.email
+            }, {
+                $addToSet: {
+                    "shoppingCart": {
+                        "isbn": bookItem.isbn,
+                        "title": bookItem.title,
+                        "authors": bookItem.author,
+                        "description": bookItem.description,
+                        "imageURL": bookItem.imageURL,
+                        "publisher": bookItem.publisher,
+                        "publishedDate": bookItem.publishedDate,
+                        "pageCount": bookItem.pageCount,
+                        "price": bookItem.price,
+                        "categories": bookItem.categories,
+                        "averageRating": bookItem.averageRating,
+                        "ratingsCount": bookItem.ratingsCount,
+                        "quantity": 1
+                    }
+                }
+            });
+
             if (status.result.ok === 1) {
                 return true;
             } else {
@@ -71,8 +99,25 @@ const addToCart = async(userEmail, bookItem) => {
     }
 };
 
-const updateQuantity = async(user, isbn, updateQuantity) => {
+const incrementQuantity = async(user, isbn, incrementAmount) => {
 
+    if (!user) throw "incrementQuantity expected a user";
+    if (!isbn) throw "incrementQuantity expected an isbn";
+    if (!incrementAmount) throw "UpdateQuanity expected a incrementAmount";
+
+    const userCollection = await usersCollection();
+
+    return await userCollection.update({
+        email: user.email,
+        "shoppingCart.isbn": isbn
+    }, {
+        $inc: {
+            "shoppingCart.$.quantity": incrementAmount
+        }
+    });
+};
+
+const updateQuantity = async(user, isbn, updateQuantity) => {
     if (!user) throw "UpdateQuanity expected a user";
     if (!isbn) throw "UpdateQuanity expected an isbn";
     if (!updateQuantity) throw "UpdateQuanity expected a updateQuantity";
@@ -83,15 +128,35 @@ const updateQuantity = async(user, isbn, updateQuantity) => {
         email: user.email,
         "shoppingCart.isbn": isbn
     }, {
-        $inc: {
-            "shoppingCart.$.quantity": 1
+        $set: {
+            "shoppingCart.$.quantity": updateQuantity
         }
     });
 };
+
+const removeBookFromCart = async(user, isbn) => {
+    if (!user) throw "UpdateQuanity expected a user";
+    if (!isbn) throw "UpdateQuanity expected an isbn";
+
+    const userCollection = await usersCollection();
+    return await userCollection.update({
+        email: user.email,
+        "shoppingCart.isbn": isbn
+    }, {
+        $pull: {
+            "shoppingCart": {
+                "isbn": isbn
+            }
+        }
+    });
+}
 
 module.exports = {
     findByEmail: findByEmail,
     findUserByID: findUserByID,
     insertNewUser: insertNewUser,
-    addToCart: addToCart
+    addToCart: addToCart,
+    incrementQuantity: incrementQuantity,
+    updateQuantity: updateQuantity,
+    removeBookFromCart: removeBookFromCart
 };

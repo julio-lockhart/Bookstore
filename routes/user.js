@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const data = require('../data');
 const lodash = require('lodash');
+
+const data = require('../data');
+const userAPI = data.users;
 
 router.get("/account", (req, res) => {
     let user = req.user;
@@ -26,7 +28,7 @@ router.get("/shoppingCart", (req, res) => {
         let totalAmount = 0;
 
         lodash.forEach(user.shoppingCart, function (book) {
-            numOfItems += book.quantity;
+            numOfItems += Number(book.quantity);
             totalAmount += (book.quantity * book.price);
         });
 
@@ -35,6 +37,27 @@ router.get("/shoppingCart", (req, res) => {
             totalAmount,
             cart: user.shoppingCart
         });
+    }
+});
+
+router.post("/shoppingCart/update/:isbn", async(req, res, next) => {
+    let user = req.user;
+    let isbn = req.params.isbn;
+    let updateQuantity = req.body.quantity;
+
+    if ('remove' in req.body) {
+        let status = await userAPI.removeBookFromCart(user, isbn);
+        if (status.result.ok === 1) {
+            console.log("Removal was good");
+            res.redirect("/user/shoppingcart");
+        }
+
+    } else if ('update' in req.body) {
+        let status = await userAPI.updateQuantity(user, isbn, updateQuantity);
+        if (status.result.ok === 1) {
+            console.log("Update was good");
+            res.redirect("/user/shoppingcart");
+        }
     }
 });
 

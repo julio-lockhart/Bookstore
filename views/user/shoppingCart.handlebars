@@ -18,13 +18,13 @@
                         <p class="card-text">
                             <small>{{this.description}}</small>
                         </p>
-                        <form>
+                        <form action="shoppingCart/update/{{this.isbn}}" method="post">
                             <p class="lead">Quantity:
-                                <input type="text" name="quantity" value="{{this.quantity}}">
+                                <input type="text" name="quantity" id="quantity" value="{{this.quantity}}">
                                 <br>
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <button type="button" class="btn btn-default">Update</button>
-                                    <button type="button" class="btn btn-default">Remove</button>
+                                    <button type="submit" class="btn btn-outline-success" name="update" value="update">Update</button>
+                                    <button type="submit" class="btn btn-outline-danger" name="remove" value="remove">Remove</button>
                                 </div>
                             </p>
                         </form>
