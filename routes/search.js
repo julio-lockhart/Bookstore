@@ -2,27 +2,18 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
+const functions = require('../utilities/functions')
 const data = require('../data');
 const searchAPI = data.search;
 const userAPI = data.users;
 
 router.get("/", async(req, res) => {
-
-    let isUserAuthenticated = (req.user != null) ? true : false;
-    console.log("Is User Authenticated: " + isUserAuthenticated);
-
-    let isCartEmpty = true;
-    if (isUserAuthenticated) {
-        if (req.user.shoppingCart > 0) {
-            isCartEmpty = false;
-        }
-    }
+    let authData = functions.isUserAuthenticated(req.user);
 
     await searchAPI.searchForBooks("*")
         .then((result) => {
             res.render("landingPage/static", {
-                isUserAuthenticated: isUserAuthenticated,
-                isCartEmpty: isCartEmpty,
+                authData,
                 result
             });
         })
@@ -42,6 +33,7 @@ router.post("/search", async(req, res) => {
 });
 
 router.get("/search/isbn/:isbn", async(req, res) => {
+    let authData = functions.isUserAuthenticated(req.user);
     let isbn = req.params.isbn;
 
     if (!isbn) throw "ISBN was null";
@@ -60,7 +52,8 @@ router.get("/search/isbn/:isbn", async(req, res) => {
                 price: result.price,
                 categories: result.categories,
                 averageRating: result.averageRating,
-                ratingsCount: result.ratingsCount
+                ratingsCount: result.ratingsCount,
+                authData
             });
         })
         .catch(error => res.status(500).json({
@@ -69,12 +62,14 @@ router.get("/search/isbn/:isbn", async(req, res) => {
 });
 
 router.get("/search/:bookTitle", async(req, res) => {
+    let authData = functions.isUserAuthenticated(req.user);
     let bookTitle = req.params.bookTitle;
     if (!bookTitle) throw "Book title was null";
 
     await searchAPI.searchForBooks(bookTitle)
         .then(result => {
             res.render("landingPage/static", {
+                authData,
                 result
             });
         })
@@ -84,6 +79,8 @@ router.get("/search/:bookTitle", async(req, res) => {
 });
 
 router.get("/category/:category", async(req, res) => {
+    let authData = functions.isUserAuthenticated(req.user);
+
     await searchAPI.searchByCategory(req.params.category)
         .then(result => res.json(result))
         .catch(error => res.status(500).json({
@@ -110,6 +107,5 @@ router.post("/addToCart/:isbn", async(req, res, next) => {
         next(e);
     }
 });
-
 
 module.exports = router;

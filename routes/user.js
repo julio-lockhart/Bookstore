@@ -2,25 +2,29 @@ const express = require('express');
 const router = express.Router();
 const lodash = require('lodash');
 
+const functions = require('../utilities/functions')
 const data = require('../data');
 const userAPI = data.users;
 
 router.get("/account", (req, res) => {
+    let authData = functions.isUserAuthenticated(req.user);
     let user = req.user;
 
-    if (!user) {
+    if (!authData.isLoggedIn) {
         res.redirect("/login");
     } else {
         res.render("user/account", {
+            authData,
             user
         });
     }
 });
 
 router.get("/shoppingCart", (req, res) => {
+    let authData = functions.isUserAuthenticated(req.user);
     let user = req.user;
 
-    if (!user) {
+    if (!authData.isLoggedIn) {
         res.redirect("/login");
     } else {
         // Get the number of items plus the total amount of the user's shopping cart
@@ -33,6 +37,7 @@ router.get("/shoppingCart", (req, res) => {
         });
 
         res.render("user/shoppingCart", {
+            authData,
             numOfItems,
             totalAmount,
             cart: user.shoppingCart
@@ -62,29 +67,17 @@ router.post("/shoppingCart/update/:isbn", async(req, res, next) => {
 });
 
 router.get("/purchases", (req, res) => {
+    let authData = functions.isUserAuthenticated(req.user);
     let user = req.user;
 
-    if (!user) {
+    if (!authData.isLoggedIn) {
         res.redirect("/login");
     } else {
         res.render("user/purchases", {
+            authData,
             purchases: user.purchases
         });
     }
 });
 
 module.exports = router;
-
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect('/');
-}
-
-function notLoggedIn(req, res, next) {
-    if (!req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect('/');
-}

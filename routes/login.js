@@ -28,7 +28,7 @@ router.post("/", (req, res, next) => {
 
                 console.log("Log In Good");
                 console.log(req.user);
-                res.redirect("user/shoppingCart");
+                res.redirect("user/shoppingcart");
             });
         }
     })(req, res, next);
