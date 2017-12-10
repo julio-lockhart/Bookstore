@@ -1,0 +1,39 @@
+<div class="container topDownOffset">
+    <div>
+        <h1>Thank you for your order</h1>
+        <hr />
+    </div>
+
+    <section>
+        <h3>Order number is: 123456</h3>
+        <p class="lead">Here is a breakdown of your order:</p>
+
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ISBN</th>
+                        <th>Title</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each cart}}
+                    <tr>
+                        <th scope="row">{{this.book.isbn}}</th>
+                        <td>{{this.book.title}}</td>
+                        <td>{{this.book.quantity}}</td>
+                        <td>${{this.book.price}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-success" role="alert">
+            Total Amount:
+            <strong>${{totalAmount}}</strong>
+        </div>
+    </section>
+</div>

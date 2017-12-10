@@ -1,98 +1,72 @@
-body {
-  padding-top: 54px;
+@media (min-width: 992px) {
+    body {
+        padding-top: 56px;
+    }
 }
 
-.jumbotron {
-  padding-top: 6rem;
-  padding-bottom: 6rem;
-  margin-bottom: 0;
-  background-color: #fff;
-  background: url("../img/banner.jpg") no-repeat center center;
-  background-size: cover;
+.searchBar {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.jumbotron p:last-child {
-  margin-bottom: 0;
+.list-group {
+    margin-bottom: 20px;
 }
 
-.jumbotron-heading {
-  margin: 0;
-  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
-  font-size: 5em;
-  color: white;
-}
-
-.jumbotron .container {
-  max-width: 40rem;
-}
-
-.jumbotron .text-muted {
-  color: white!important;
-}
-
-.row-fluid {
-  margin-top: 20px;
-}
-
-.center {
-  margin: 20px auto;
-  width: 80%;
-}
-
-#custom-search-input {
-  margin: 0;
-  margin-top: 10px;
-  padding: 0;
+.portfolio-item {
+    margin-bottom: 30px;
 }
 
 .card-img-top {
-  max-height: 286px;
-  border-bottom: thin solid black;
+    height: 400px;
 }
 
-.col-md-3 {
-  margin-bottom: 20px;
+.splash {
+    height: 35em;
+    padding-top: 9em;
+    background: url("../img/banner.jpg") no-repeat center center;
+    background-size: cover;
+    color: #fff;
+    text-align: center;
 }
 
-.col-centered {
-  float: none;
-  margin: 0 auto;
+.splash .text-muted {
+    color: white!important;
 }
 
-#custom-search-input .search-query {
-  padding-right: 3px;
-  padding-right: 4px \9;
-  padding-left: 3px;
-  padding-left: 4px \9;
-  /* IE7-8 doesn't have border-radius, so don't indent the padding */
-  margin-bottom: 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+.error-template {
+    padding: 40px 15px;
+    text-align: center;
 }
 
-#custom-search-input button {
-  border: 0;
-  background: none;
-  /** belows styles are working good */
-  padding: 2px 5px;
-  margin-top: 2px;
-  position: relative;
-  left: -28px;
-  /* IE7-8 doesn't have border-radius, so don't indent the padding */
-  margin-bottom: 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  color: #D9230F;
+.error-details {
+    text-align: left
 }
 
-.search-query:focus+button {
-  z-index: 3;
+.error-actions {
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
-@media (min-width: 992px) {
-  body {
-    padding-top: 56px;
-  }
+.error-actions .btn {
+    margin-right: 10px;
+}
+
+.topBottomOffset {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.topOffset {
+    margin-top: 20px;
+}
+
+.bottomOffset {
+    margin-bottom: 20px;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+    }
 }

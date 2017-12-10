@@ -1,0 +1,27 @@
+<div class="container topBottomOffset">
+    <div class="center">
+        <div class="container py-3">
+            {{#each purchases}}
+            <div class="card" style="margin-bottom: 20px">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="{{this.imageURL}}" class="w-100">
+                    </div>
+
+                    <div class="col-md-8 px-3">
+                        <div class="card-block px-3">
+                            <h4 class="card-title">{{this.title}}</h4>
+                            <p class="card-text">
+                                <small>{{this.description}}</small>
+                            </p>
+                            <p class="lead">Purchased: {{this.datePurchased}}</p>
+                            <p class="lead">Quantity: {{this.quantity}}</p>
+                            <p class="lead">Price: ${{this.price}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

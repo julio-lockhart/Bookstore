@@ -1,4 +1,4 @@
-const mongoCollection = require('../config/mongo/mongoCollections');
+const mongoCollection = require('../../config/mongo/mongoCollections');
 const usersCollection = mongoCollection.users;
 const uuidv4 = require('uuid/v4');
 const bcrypt = require('bcrypt-nodejs');
@@ -14,19 +14,6 @@ const findByEmail = async(userEmail, callback) => {
         callback(null, user);
     } else {
         callback("User does not exist", null);
-    }
-};
-
-const findUserByID = async(id) => {
-    const users = await usersCollection();
-    const userItem = await users.findOne({
-        _id: id
-    });
-
-    if (!userItem) {
-        return null;
-    } else {
-        return userItem;
     }
 };
 
@@ -57,35 +44,27 @@ const addToCart = async(userEmail, bookItem) => {
 
     if (user) {
         // Check if the book added to the cart is already in their shopping cart.
-        let isBookInCart = lodash.filter(user.shoppingCart, x => x.isbn === bookItem.isbn);
+        let isBookInCart = lodash.filter(user.shoppingCart, x => x.book.isbn === bookItem.isbn);
+        let book = bookItem[0];
 
         // If the book exists, update the quantity, otherwise, add it to the cart
         if (!Array.isArray(isBookInCart) || isBookInCart.length > 0) {
-            let status = await incrementQuantity(user, bookItem.isbn, 1);
+            let status = await incrementQuantity(user, book.isbn, 1);
             if (status.result.ok === 1) {
                 return true;
             } else {
                 throw "Unable to update shopping cart";
             }
         } else {
+            // Adding some extra attributes
+            book.quantity = 1;
+
             let status = await userCollection.update({
                 email: user.email
             }, {
                 $addToSet: {
                     "shoppingCart": {
-                        "isbn": bookItem.isbn,
-                        "title": bookItem.title,
-                        "authors": bookItem.author,
-                        "description": bookItem.description,
-                        "imageURL": bookItem.imageURL,
-                        "publisher": bookItem.publisher,
-                        "publishedDate": bookItem.publishedDate,
-                        "pageCount": bookItem.pageCount,
-                        "price": bookItem.price,
-                        "categories": bookItem.categories,
-                        "averageRating": bookItem.averageRating,
-                        "ratingsCount": bookItem.ratingsCount,
-                        "quantity": 1
+                        book
                     }
                 }
             });
@@ -109,10 +88,10 @@ const incrementQuantity = async(user, isbn, incrementAmount) => {
 
     return await userCollection.update({
         email: user.email,
-        "shoppingCart.isbn": isbn
+        "shoppingCart.book.isbn": isbn
     }, {
         $inc: {
-            "shoppingCart.$.quantity": incrementAmount
+            "shoppingCart.$.book.quantity": parseInt(incrementAmount)
         }
     });
 };
@@ -126,37 +105,92 @@ const updateQuantity = async(user, isbn, updateQuantity) => {
 
     return await userCollection.update({
         email: user.email,
-        "shoppingCart.isbn": isbn
+        "shoppingCart.book.isbn": isbn
     }, {
         $set: {
-            "shoppingCart.$.quantity": updateQuantity
+            "shoppingCart.$.book.quantity": updateQuantity
         }
     });
 };
 
 const removeBookFromCart = async(user, isbn) => {
-    if (!user) throw "UpdateQuanity expected a user";
-    if (!isbn) throw "UpdateQuanity expected an isbn";
+    if (!user) throw "removeBookFromCart expected a user";
+    if (!isbn) throw "removeBookFromCart expected an isbn";
 
     const userCollection = await usersCollection();
     return await userCollection.update({
         email: user.email,
-        "shoppingCart.isbn": isbn
+        "shoppingCart.book.isbn": isbn
     }, {
         $pull: {
             "shoppingCart": {
-                "isbn": isbn
+                "book.isbn": isbn
             }
         }
     });
 }
 
+const getCartInformation = async(user) => {
+    if (!user) throw "UpdateQuanity expected a user";
+
+    // Get the number of items plus the total amount of the user's shopping cart
+    let numOfItems = 0;
+    let totalAmount = 0;
+
+    lodash.forEach(user.shoppingCart, function (item) {
+        numOfItems += Number(item.book.quantity);
+        totalAmount += (item.book.quantity * item.book.price);
+    });
+
+    return {
+        numOfItems: numOfItems,
+        totalAmount: totalAmount,
+        cart: user.shoppingCart
+    };
+}
+
+const completePurchaseOrder = async(user) => {
+    if (!user) throw "UpdateQuanity expected a user";
+    const userCollection = await usersCollection();
+
+    for (let i = 0; i < user.shoppingCart.length; i++) {
+        let book = user.shoppingCart[i].book;
+        await removeBookFromCart(user, book.isbn);
+
+        await userCollection.update({
+            email: user.email
+        }, {
+            $addToSet: {
+                "purchases": {
+                    book
+                }
+            }
+        });
+    }
+
+    lodash.forEach(user.shoppingCart, function (item) {
+        let test = item;
+
+
+        // await userCollection.update({
+        //     email: user.email
+        // }, {
+        //     $addToSet: {
+        //         "purchases": {
+        //             item
+        //         }
+        //     }
+        // });
+    });
+};
+
 module.exports = {
     findByEmail: findByEmail,
-    findUserByID: findUserByID,
     insertNewUser: insertNewUser,
     addToCart: addToCart,
     incrementQuantity: incrementQuantity,
     updateQuantity: updateQuantity,
-    removeBookFromCart: removeBookFromCart
+    removeBookFromCart: removeBookFromCart,
+    getCartInformation: getCartInformation,
+    completePurchaseOrder: completePurchaseOrder
 };

@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const authenticationMiddleware = require('../config/authentication')
+const authenticationMiddleware = require('../../config/authentication')
 let Strategy = require('passport-local').Strategy;
 
 router.get("/", (req, res) => {
-    res.render("login/login", {});
+    res.render("user/loginView/login", {});
 });
 
 router.post("/", (req, res, next) => {
@@ -19,21 +19,15 @@ router.post("/", (req, res, next) => {
         if (!user) {
             console.log(info);
         } else {
-            console.log("User Login Good");
-
             req.logIn(user, function (err) {
                 if (err) {
                     return next(err);
                 }
 
-                console.log("Log In Good");
-                console.log(req.user);
                 res.redirect("user/shoppingcart");
             });
         }
     })(req, res, next);
 });
-
-
 
 module.exports = router;

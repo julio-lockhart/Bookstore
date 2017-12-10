@@ -1,24 +1,24 @@
 {
   "name": "bookstore",
   "version": "1.0.0",
-  "description": "An online bookstore implemented using Node.js, Express and Google Books API",
+  "description": "Online bookstore utilizing Node.Js, Express and MongoDB",
   "main": "app.js",
   "scripts": {
-    "start": "app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/julio-lockhart/Bookstore.git"
-  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "bookstore",
+    "google",
+    "books",
+    "api"
+  ],
   "author": "Julio Lockhart",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/julio-lockhart/Bookstore/issues"
-  },
-  "homepage": "https://github.com/julio-lockhart/Bookstore#readme",
   "dependencies": {
-    "axios": "^0.17.0",
+    "axios": "^0.17.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
@@ -28,10 +28,9 @@
     "hbs": "^4.0.1",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.33",
+    "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "request": "^2.83.0",
-    "request-promise": "^4.2.2",
     "uuid": "^3.1.0"
   }
 }
