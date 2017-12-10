@@ -35,7 +35,6 @@ app.use("/public", static);
 app.engine('handlebars', handlebarsInstance.engine);
 app.set('view engine', 'handlebars');
 
-
 // Morgan logger
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 //app.use(morganDebug('myapp', 'combined'));

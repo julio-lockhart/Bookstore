@@ -17,6 +17,20 @@ const findByEmail = async(userEmail, callback) => {
     }
 };
 
+const findUserByID = async(id) => {
+    const users = await usersCollection();
+    const userItem = await users.findOne({
+        _id: id
+    });
+
+    if (!userItem) {
+        return null;
+    } else {
+        return userItem;
+    }
+};
+
+
 const insertNewUser = async(userData) => {
     const users = await usersCollection();
     const newUser = {
@@ -168,6 +182,7 @@ const completePurchaseOrder = async(user) => {
         });
     }
 
+    // TODO
     lodash.forEach(user.shoppingCart, function (item) {
         let test = item;
 
@@ -186,6 +201,7 @@ const completePurchaseOrder = async(user) => {
 
 module.exports = {
     findByEmail: findByEmail,
+    findUserByID: findUserByID,
     insertNewUser: insertNewUser,
     addToCart: addToCart,
     incrementQuantity: incrementQuantity,
