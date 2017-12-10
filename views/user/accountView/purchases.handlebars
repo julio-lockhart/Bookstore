@@ -1,4 +1,5 @@
 <div class="container topBottomOffset">
+    {{#if purchases}}
     <div class="center">
         <div class="container py-3">
             {{#each purchases}}
@@ -24,4 +25,14 @@
             {{/each}}
         </div>
     </div>
+    {{else}}
+    <div class="center">
+        <div class="container py-3">
+            <h2>No purchases to show</h2>
+            <a href="/" class="btn btn-primary btn-lg">
+                <span class="glyphicon glyphicon-home"></span>
+                Search for Books </a>
+        </div>
+    </div>
+    {{/if}}
 </div>
