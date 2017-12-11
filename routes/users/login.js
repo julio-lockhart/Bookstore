@@ -12,16 +12,22 @@ router.post("/", (req, res, next) => {
     passport.authenticate('local', function (err, user, info) {
         if (err) {
             res.render("user/loginView/login", {
-                error: "There was a problem with the login credentials."
+                error: "An account with that email does not exist."
             })
         } else {
-            req.logIn(user, function (err) {
-                if (err) {
-                    return next(err);
-                }
+            if (user) {
+                req.logIn(user, function (err) {
+                    if (err) {
+                        return next(err);
+                    }
 
-                res.redirect("user/account");
-            });
+                    res.redirect("user/account");
+                });
+            } else {
+                res.render("user/loginView/login", {
+                    error: "Incorrect password."
+                })
+            }
         }
     })(req, res, next);
 });

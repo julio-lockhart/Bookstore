@@ -65,6 +65,11 @@ router.get("/confirmation", authenticationMiddleware, async(req, res) => {
     });
 });
 
+router.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect('/');
+});
+
 router.post("/account", authenticationMiddleware, async(req, res) => {
     let data = req.body;
     let user = req.user;
