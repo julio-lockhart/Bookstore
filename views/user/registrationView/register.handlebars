@@ -33,7 +33,10 @@
             <div class="form-group">
                 <label for="passwordInput">Password</label>
                 <input type="password" class="form-control" name="passwordInput" id="passwordInput" placeholder="Password" tabindex="4" minlength="5"
-                    required>
+                    aria-describedby="passwordHelpInline" required>
+                <small id="passwordHelpInline" class="text-muted">
+                    Must be 8-20 characters long.
+                </small>
             </div>
             <div class="form-check">
                 <label class="form-check-label">

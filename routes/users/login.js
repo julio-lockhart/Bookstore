@@ -21,7 +21,7 @@ router.post("/", (req, res, next) => {
                         return next(err);
                     }
 
-                    res.redirect("user/account");
+                    res.redirect("/");
                 });
             } else {
                 res.render("user/loginView/login", {

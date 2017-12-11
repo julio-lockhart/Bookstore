@@ -8,6 +8,32 @@ body {
     /* Margin bottom by footer height */
 }
 
+.nav-link {
+    /* Forcing color update for Tota11y compliance */
+    color: white!important;
+}
+
+.btn {
+    /* Forcing color update for Tota11y compliance */
+    color: white;
+    background-color: #0072ee!important;
+}
+
+footer a {
+    /* Forcing color update for Tota11y compliance */
+    color: #78a0ff;
+}
+
+.list-group a {
+    /* Forcing color update for Tota11y compliance */
+    color: #1373e9;
+}
+
+.item a {
+    /* Forcing color update for Tota11y compliance */
+    color: #006ee5;
+}
+
 .searchBar {
     margin-top: 20px;
     margin-bottom: 20px;
