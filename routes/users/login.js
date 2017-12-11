@@ -11,20 +11,16 @@ router.get("/", (req, res) => {
 router.post("/", (req, res, next) => {
     passport.authenticate('local', function (err, user, info) {
         if (err) {
-            res.sendStatus(500).json({
-                error: err
-            });
-        }
-
-        if (!user) {
-            console.log(info);
+            res.render("user/loginView/login", {
+                error: "There was a problem with the login credentials."
+            })
         } else {
             req.logIn(user, function (err) {
                 if (err) {
                     return next(err);
                 }
 
-                res.redirect("user/shoppingcart");
+                res.redirect("user/account");
             });
         }
     })(req, res, next);
