@@ -1,7 +1,11 @@
-@media (min-width: 992px) {
-    body {
-        padding-top: 56px;
-    }
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background-color: #f7f7f7;
+    /* Margin bottom by footer height */
 }
 
 .searchBar {
@@ -63,6 +67,12 @@
 
 .bottomOffset {
     margin-bottom: 20px;
+}
+
+@media (min-width: 992px) {
+    body {
+        padding-top: 56px;
+    }
 }
 
 @media (min-width: 1200px) {
