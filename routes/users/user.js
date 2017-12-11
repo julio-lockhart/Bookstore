@@ -16,7 +16,6 @@ router.get("/account", authenticationMiddleware, (req, res) => {
         authData: authData,
         user: user
     });
-
 });
 
 // Gets the users shopping cart
@@ -63,6 +62,24 @@ router.get("/confirmation", authenticationMiddleware, async(req, res) => {
         authData: authData,
         totalAmount: cartDetails.totalAmount,
         cart: cartDetails.cart
+    });
+});
+
+router.post("/account", authenticationMiddleware, async(req, res) => {
+    let data = req.body;
+    let user = req.user;
+
+    let updatedInfo = await userAPI.updateUser(user._id, data);
+
+    // Re-authenticate log-in incase the user updates their email or password 
+    req.logIn(updatedInfo, function (err) {
+        if (err) {
+            res.render("user/accountView/account", {
+                error: "There was a problem updating your account"
+            });
+        }
+
+        res.redirect("account");
     });
 });
 

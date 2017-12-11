@@ -50,6 +50,46 @@ const insertNewUser = async(userData) => {
     return item;
 };
 
+const updateUser = async(id, newData) => {
+    if (!id) throw "ID is needed to update";
+    if (!newData) throw "Need an update object.";
+
+    const users = await usersCollection();
+    let updatedData = {};
+
+    // Update First Name
+    if (newData.firstNameInput) {
+        updatedData.firstName = newData.firstNameInput;
+    }
+
+    // Update Last Name
+    if (newData.lastNameInput) {
+        updatedData.lastName = newData.lastNameInput;
+    }
+
+    // Update Email
+    if (newData.emailInput) {
+        updatedData.email = newData.emailInput;
+    }
+
+    // Update Password
+    if (newData.passwordInput) {
+        updatedData.password = bcrypt.hashSync(newData.passwordInput);
+    }
+
+    // Update command
+    let updateCommand = {
+        $set: updatedData
+    };
+
+    const updateInfo = await users.updateOne({
+        _id: id
+    }, updateCommand);
+
+    const returnedData = await findUserByID(id);
+    return returnedData;
+};
+
 const addToCart = async(userEmail, bookItem) => {
     const userCollection = await usersCollection();
     const user = await userCollection.findOne({
@@ -203,6 +243,7 @@ module.exports = {
     findByEmail: findByEmail,
     findUserByID: findUserByID,
     insertNewUser: insertNewUser,
+    updateUser: updateUser,
     addToCart: addToCart,
     incrementQuantity: incrementQuantity,
     updateQuantity: updateQuantity,
