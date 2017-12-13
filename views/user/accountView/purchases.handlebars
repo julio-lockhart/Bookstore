@@ -6,18 +6,18 @@
             <div class="card" style="margin-bottom: 20px">
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="{{this.imageURL}}" class="w-100">
+                        <img src="{{this.book.imageURL.thumbnail}}" class="w-100" alt="{{this.book.title}}">
                     </div>
 
                     <div class="col-md-8 px-3">
                         <div class="card-block px-3">
-                            <h4 class="card-title">{{this.title}}</h4>
+                            <p class="h4 card-title">{{this.book.title}}</p>
                             <p class="card-text">
-                                <small>{{this.description}}</small>
+                                <small>{{this.book.description}}</small>
                             </p>
-                            <p class="lead">Purchased: {{this.datePurchased}}</p>
-                            <p class="lead">Quantity: {{this.quantity}}</p>
-                            <p class="lead">Price: ${{this.price}}</p>
+                            <p class="lead">Purchased: {{this.book.datePurchased}}</p>
+                            <p class="lead">Quantity: {{this.book.quantity}}</p>
+                            <p class="lead">Price: ${{this.book.price}}</p>
                         </div>
                     </div>
                 </div>

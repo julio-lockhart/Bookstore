@@ -9,17 +9,18 @@
             <div class="card" style="margin-bottom: 20px">
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="{{this.book.imageURL.thumbnail}}" class="w-100">
+                        <img src="{{this.book.imageURL.thumbnail}}" class="w-100" alt="{{this.book.title}}">
                     </div>
 
                     <div class="col-md-8 px-3">
                         <div class="card-block px-3">
-                            <h4 class="card-title">{{this.book.title}}</h4>
+                            <p class="h4 card-title">{{this.book.title}}</p>
                             <p class="card-text">
                                 <small>{{this.book.textSnippet}}</small>
                             </p>
                             <form action="shoppingCart/update/{{this.book.isbn}}" method="post">
                                 <p class="lead">Quantity:
+                                    <label class="sr-only" for="quantity">Quantity...</label>
                                     <input type="text" name="quantity" id="quantity" value="{{this.book.quantity}}">
                                     <br>
                                     <div class="btn-group btn-group-sm" role="group">

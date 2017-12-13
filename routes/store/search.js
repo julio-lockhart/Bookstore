@@ -29,9 +29,6 @@ router.get("/", async(req, res) => {
                 error
             });
         });
-    // .catch(error => res.status(500).json({
-    //     error: error
-    // }));
 });
 
 // Search for a book based on isbn

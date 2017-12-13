@@ -10,13 +10,13 @@
             <h1 class="mt-4">{{result.title}}</h1>
 
             <!-- Author -->
-            <p class="lead">by {{result.author}}</p>
+            <p class="lead">by {{result.authors}}</p>
             <hr>
 
             <!-- Preview Image and Book Info -->
             <div class="row">
                 <div class="col-md-5 col-centered">
-                    <img class="img-fluid rounded card-img-top" src="{{result.imageURL.thumbnail}}" alt="">
+                    <img class="img-fluid rounded card-img-top" src="{{result.imageURL.thumbnail}}" alt="{{result.title}}">
                 </div>
 
                 <div class="col-md-7">
@@ -42,7 +42,7 @@
             <hr>
 
             <!-- Post Content -->
-            <h3>Description:</h3>
+            <p class="h3">Description:</p>
             <p class="lead">{{result.description}}</p>
             <hr>
         </div>
@@ -52,10 +52,11 @@
 
             <!-- Search Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Search</h5>
+                <p class="h5 card-header">Search</p>
                 <div class="card-body">
                     <form action="/search" method="post" id="searchForm">
                         <div class="input-group">
+                            <label class="sr-only" for="searchBookTitle">Search for a book title...</label>
                             <input type="text" class="form-control" name="bookTitle" id="searchBookTitle" placeholder="Search for a book title...">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit">Search</button>
@@ -67,7 +68,7 @@
 
             <!-- Categories Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Related Categories</h5>
+                <p class="h5 card-header">Related Categories</p>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
@@ -85,7 +86,7 @@
 
             <!-- Side Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Rating</h5>
+                <p class=" h5 card-header">Rating</p>
                 <div class="card-body">
                     <p>
                         <small>Average Rating: </small> {{result.averageRating}} out of 5

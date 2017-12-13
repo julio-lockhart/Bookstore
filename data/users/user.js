@@ -3,6 +3,7 @@ const usersCollection = mongoCollection.users;
 const uuidv4 = require('uuid/v4');
 const bcrypt = require('bcrypt-nodejs');
 const lodash = require('lodash');
+const moment = require('moment');
 
 const findByEmail = async(userEmail, callback) => {
     const users = await usersCollection();
@@ -210,6 +211,9 @@ const completePurchaseOrder = async(user) => {
     for (let i = 0; i < user.shoppingCart.length; i++) {
         let book = user.shoppingCart[i].book;
         await removeBookFromCart(user, book.isbn);
+
+        // Add purchase data
+        book.datePurchased = moment().format('MMMM Do YYYY');
 
         await userCollection.update({
             email: user.email
