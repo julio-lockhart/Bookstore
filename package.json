@@ -4,7 +4,12 @@
   "description": "Online bookstore utilizing Node.Js, Express and MongoDB",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/julio-lockhart/Bookstore.git"
   },
   "keywords": [
     "nodejs",
@@ -16,7 +21,7 @@
     "api"
   ],
   "author": "Julio Lockhart",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.17.1",
     "bcrypt-nodejs": "0.0.3",
