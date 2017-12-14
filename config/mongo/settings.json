@@ -1,6 +1,6 @@
 {
     "mongoConfig": {
-        "serverUrl": "mongodb://localhost:27017/",
+        "serverUrl": "mongodb://heroku_bnfgnmqr@ds141786.mlab.com:41786/heroku_bnfgnmqr",
         "database": "Bookstore"
     }
 }
