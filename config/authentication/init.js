@@ -21,7 +21,6 @@ let initializePassport = () => {
                 }
 
                 if (!user) {
-                    console.log('User not found');
                     return callback(null, false);
                 }
 

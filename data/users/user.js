@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt-nodejs');
 const lodash = require('lodash');
 const moment = require('moment');
 
+// Returns a users information based on the passed in email
 const findByEmail = async(userEmail, callback) => {
     const users = await usersCollection();
     const user = await users.findOne({
@@ -18,6 +19,7 @@ const findByEmail = async(userEmail, callback) => {
     }
 };
 
+// Returns a users information based on the passed in id
 const findUserByID = async(id) => {
     const users = await usersCollection();
     const userItem = await users.findOne({
@@ -31,7 +33,7 @@ const findUserByID = async(id) => {
     }
 };
 
-
+// Inserts a new user
 const insertNewUser = async(userData) => {
     const users = await usersCollection();
     const newUser = {
@@ -51,6 +53,7 @@ const insertNewUser = async(userData) => {
     return item;
 };
 
+// Updates a user's information
 const updateUser = async(id, newData) => {
     if (!id) throw "ID is needed to update";
     if (!newData) throw "Need an update object.";
@@ -91,6 +94,7 @@ const updateUser = async(id, newData) => {
     return returnedData;
 };
 
+// Adds a book to the user's shopping cart
 const addToCart = async(userEmail, bookItem) => {
     const userCollection = await usersCollection();
     const user = await userCollection.findOne({
@@ -133,6 +137,8 @@ const addToCart = async(userEmail, bookItem) => {
     }
 };
 
+
+// Increments the quanity item of a book inside the shopping cart.
 const incrementQuantity = async(user, isbn, incrementAmount) => {
 
     if (!user) throw "incrementQuantity expected a user";
@@ -151,6 +157,7 @@ const incrementQuantity = async(user, isbn, incrementAmount) => {
     });
 };
 
+// Uopdates the quanity item of a book inside the shopping cart.
 const updateQuantity = async(user, isbn, updateQuantity) => {
     if (!user) throw "UpdateQuanity expected a user";
     if (!isbn) throw "UpdateQuanity expected an isbn";
@@ -168,6 +175,7 @@ const updateQuantity = async(user, isbn, updateQuantity) => {
     });
 };
 
+// Removes a book from the shopping cart.
 const removeBookFromCart = async(user, isbn) => {
     if (!user) throw "removeBookFromCart expected a user";
     if (!isbn) throw "removeBookFromCart expected an isbn";
@@ -185,6 +193,7 @@ const removeBookFromCart = async(user, isbn) => {
     });
 }
 
+// Returns infromation about the user's cart (number of items, total amount and the books.)
 const getCartInformation = async(user) => {
     if (!user) throw "UpdateQuanity expected a user";
 
@@ -204,6 +213,8 @@ const getCartInformation = async(user) => {
     };
 }
 
+// "Completes" the users order. Moves everything in the shopping cart
+// to the purchases history.
 const completePurchaseOrder = async(user) => {
     if (!user) throw "UpdateQuanity expected a user";
     const userCollection = await usersCollection();
@@ -225,22 +236,6 @@ const completePurchaseOrder = async(user) => {
             }
         });
     }
-
-    // TODO
-    lodash.forEach(user.shoppingCart, function (item) {
-        let test = item;
-
-
-        // await userCollection.update({
-        //     email: user.email
-        // }, {
-        //     $addToSet: {
-        //         "purchases": {
-        //             item
-        //         }
-        //     }
-        // });
-    });
 };
 
 module.exports = {
