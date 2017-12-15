@@ -10,7 +10,9 @@ const constructorMethod = (app) => {
     app.use("/register", registerRoute);
 
     app.use("*", (req, res) => {
-        res.render("error/static", {});
+        res.render("error/static", {
+            error: "Page not found."
+        });
     });
 };
 

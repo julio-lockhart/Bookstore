@@ -14,7 +14,9 @@
 
                     <div class="col-md-8 px-3">
                         <div class="card-block px-3">
-                            <p class="h4 card-title">{{this.book.title}}</p>
+                            <p class="h4 card-title">
+                                <a href="/search/isbn/{{this.book.isbn}}">{{this.book.title}}</a>
+                            </p>
                             <p class="card-text">
                                 <small>{{this.book.textSnippet}}</small>
                             </p>

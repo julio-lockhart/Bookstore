@@ -14,9 +14,6 @@ router.get("/", async(req, res) => {
 
     await searchAPI.searchForBooks("*")
         .then((result) => {
-            console.log("Default Search Returned:");
-            console.log(result);
-
             res.render("store/landingPage/static", {
                 authData: authData,
                 pageTitle: "Bookstore",
@@ -42,11 +39,9 @@ router.get("/search/isbn/:isbn", async(req, res) => {
 
     await searchAPI.searchByISBN(isbn)
         .then((result) => {
-            console.log("ISBN Search Returned:");
-            console.log(result);
-
             res.render("store/bookView/static", {
                 authData: authData,
+                pageTitle: result[0].title,
                 result: result[0]
             });
         })
@@ -68,9 +63,6 @@ router.get("/search/:bookTitle", async(req, res) => {
 
     await searchAPI.searchForBooks(bookTitle)
         .then((result) => {
-            console.log("Title Search Returned:");
-            console.log(result);
-
             res.render("store/landingPage/static", {
                 authData: authData,
                 pageTitle: "Search Results: " + bookTitle,
@@ -96,9 +88,6 @@ router.get("/category/:category", async(req, res) => {
 
     await searchAPI.searchByCategory(category)
         .then((result) => {
-            console.log("Category Search Returned:");
-            console.log(result);
-
             res.render("store/landingPage/static", {
                 authData: authData,
                 pageTitle: "Category: " + category,
@@ -129,7 +118,6 @@ router.post("/addToCart/:isbn", authenticationMiddleware, async(req, res, next) 
 
     let book = await searchAPI.searchByISBN(isbn);
     let updateStatus = await userAPI.addToCart(user.email, book);
-    console.log("Update Status: " + updateStatus);
 
     // Redirect back to the main page and show that adding to cart was successful
     if (updateStatus) {

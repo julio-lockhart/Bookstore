@@ -13,7 +13,6 @@ const searchForBooks = async(bookTitle) => {
     };
 
     let searchUrl = constants.URLS.SEARCH_URL + encodeURIComponent(bookTitle);
-    console.log("searchForBooksCalled: " + searchUrl);
 
     try {
         const response = await axios.get(searchUrl);
@@ -46,7 +45,6 @@ const searchByISBN = async(isbn) => {
     };
 
     let searchUrl = constants.URLS.ISBN_URL + isbn;
-    console.log("searchByISBN: " + searchUrl);
 
     try {
         const response = await axios.get(searchUrl);
@@ -78,7 +76,6 @@ const searchByCategory = async(category) => {
     };;
 
     let searchUrl = constants.URLS.CATEGORY_URL + encodeURIComponent(category);
-    console.log("searchByCategory: " + searchUrl);
 
     try {
         const response = await axios.get(searchUrl);

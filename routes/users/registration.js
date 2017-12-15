@@ -5,7 +5,9 @@ const data = require('../../data');
 const usersAPI = data.users;
 
 router.get("/", (req, res) => {
-    res.render("user/registrationView/register", {});
+    res.render("user/registrationView/register", {
+        pageTitle: "Registration"
+    });
 });
 
 router.post("/", async(req, res) => {
@@ -14,6 +16,7 @@ router.post("/", async(req, res) => {
     await usersAPI.findByEmail(data.emailInput, function (err, user) {
         if (user) {
             res.render("user/registrationView/register", {
+                pageTitle: "Registration - Error",
                 error: "An account with that email already exists."
             });
         } else {
@@ -29,7 +32,12 @@ router.post("/", async(req, res) => {
                         });
                     }
                 })
-                .catch(error => console.log(error));
+                .catch(error => {
+                    res.render("error/static", {
+                        pageTitle: "Error",
+                        error: error
+                    });
+                });
         }
     });
 });

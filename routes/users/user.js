@@ -14,6 +14,7 @@ router.get("/account", authenticationMiddleware, (req, res) => {
 
     res.render("user/accountView/account", {
         authData: authData,
+        pageTitle: "Account",
         user: user
     });
 });
@@ -34,6 +35,7 @@ router.get("/shoppingCart", authenticationMiddleware, (req, res) => {
 
     res.render("user/accountView/shoppingCart", {
         authData: authData,
+        pageTitle: "Cart",
         numOfItems: numOfItems,
         totalAmount: totalAmount,
         cart: user.shoppingCart
@@ -47,6 +49,7 @@ router.get("/purchases", authenticationMiddleware, (req, res) => {
 
     res.render("user/accountView/purchases", {
         authData: authData,
+        pageTitle: "Purchases",
         purchases: user.purchases
     });
 });
@@ -70,6 +73,7 @@ router.get("/logout", (req, res) => {
     res.redirect('/');
 });
 
+// Updating user account
 router.post("/account", authenticationMiddleware, async(req, res) => {
     let data = req.body;
     let user = req.user;
@@ -80,6 +84,7 @@ router.post("/account", authenticationMiddleware, async(req, res) => {
     req.logIn(updatedInfo, function (err) {
         if (err) {
             res.render("user/accountView/account", {
+                pageTitle: "Error",
                 error: "There was a problem updating your account"
             });
         }
@@ -88,6 +93,7 @@ router.post("/account", authenticationMiddleware, async(req, res) => {
     });
 });
 
+// Adds a book to the user's cart
 router.post("/shoppingCart/update/:isbn", async(req, res, next) => {
     let user = req.user;
     let isbn = req.params.isbn;
@@ -96,13 +102,11 @@ router.post("/shoppingCart/update/:isbn", async(req, res, next) => {
     if ('remove' in req.body) {
         let status = await userAPI.removeBookFromCart(user, isbn);
         if (status.result.ok === 1) {
-            console.log("Removal was good");
             res.redirect("/user/shoppingcart");
         }
     } else if ('update' in req.body) {
         let status = await userAPI.updateQuantity(user, isbn, updateQuantity);
         if (status.result.ok === 1) {
-            console.log("Update was good");
             res.redirect("/user/shoppingcart");
         }
     }
