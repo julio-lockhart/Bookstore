@@ -29,7 +29,11 @@ router.post("/", async(req, res) => {
                         });
                     }
                 })
-                .catch(error => console.log(error));
+                .catch(error => {
+                    res.render("error/static", {
+                        error
+                    });
+                });
         }
     });
 });

@@ -4,12 +4,15 @@ const passport = require('passport');
 const authenticationMiddleware = require('../../config/authentication')
 let Strategy = require('passport-local').Strategy;
 
+// Login route
 router.get("/", (req, res) => {
     res.render("user/loginView/login", {});
 });
 
+// Login post. Using Passport to verify that the user is authenticated.
 router.post("/", (req, res, next) => {
 
+    // Getting the Recaptcha response
     var recaptchaResponse = req.body['g-recaptcha-response'];
     if (recaptchaResponse === undefined || recaptchaResponse === '' ||
         recaptchaResponse === null) {
