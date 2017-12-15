@@ -41,6 +41,7 @@ router.get("/search/isbn/:isbn", async(req, res) => {
         .then((result) => {
             res.render("store/bookView/static", {
                 authData: authData,
+                pageTitle: result[0].title,
                 result: result[0]
             });
         })

@@ -6,7 +6,9 @@ let Strategy = require('passport-local').Strategy;
 
 // Login route
 router.get("/", (req, res) => {
-    res.render("user/loginView/login", {});
+    res.render("user/loginView/login", {
+        pageTitle: "Login"
+    });
 });
 
 // Login post. Using Passport to verify that the user is authenticated.
@@ -23,6 +25,7 @@ router.post("/", (req, res, next) => {
         passport.authenticate('local', function (err, user, info) {
             if (err) {
                 res.render("user/loginView/login", {
+                    pageTitle: "Error",
                     error: "An account with that email does not exist."
                 })
             } else {
@@ -36,6 +39,7 @@ router.post("/", (req, res, next) => {
                     });
                 } else {
                     res.render("user/loginView/login", {
+                        pageTitle: "Error",
                         error: "Incorrect password."
                     })
                 }

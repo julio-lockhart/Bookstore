@@ -14,6 +14,7 @@ router.get("/account", authenticationMiddleware, (req, res) => {
 
     res.render("user/accountView/account", {
         authData: authData,
+        pageTitle: "Account",
         user: user
     });
 });
@@ -34,6 +35,7 @@ router.get("/shoppingCart", authenticationMiddleware, (req, res) => {
 
     res.render("user/accountView/shoppingCart", {
         authData: authData,
+        pageTitle: "Cart",
         numOfItems: numOfItems,
         totalAmount: totalAmount,
         cart: user.shoppingCart
@@ -47,6 +49,7 @@ router.get("/purchases", authenticationMiddleware, (req, res) => {
 
     res.render("user/accountView/purchases", {
         authData: authData,
+        pageTitle: "Purchases",
         purchases: user.purchases
     });
 });
@@ -81,6 +84,7 @@ router.post("/account", authenticationMiddleware, async(req, res) => {
     req.logIn(updatedInfo, function (err) {
         if (err) {
             res.render("user/accountView/account", {
+                pageTitle: "Error",
                 error: "There was a problem updating your account"
             });
         }
