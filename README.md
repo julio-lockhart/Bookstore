@@ -1,6 +1,6 @@
 # Bookstore
 
-This is an online bookstore developed for my final Web Programming project. The requirements were to develop a project using NodeJS, Express, HTML/CSS and Javascipt for DOM manipulations/error checking. This proejct utilizes Google Books API for getting book details. The user will be able to search for books based on Title. They will be able to register, login, view their cart and previous purchases.
+This is an online bookstore developed for my final Web Programming project. The requirements were to develop a project using NodeJS, Express, HTML/CSS and Javascipt for DOM manipulations/error checking. This project utilizes Google Books API for getting book details. The user will be able to search for books based on Title. They will be able to register, login, view their cart and previous purchases.
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ To run locally, ensure that Node JS is installed.
 
 ### Running Locally
 
-After cloning, open the command line and navigate to the root directory of the proejct. Then run
+After cloning, open the command line and navigate to the root directory of the project. Then run
 
 ```
 npm install
@@ -33,7 +33,7 @@ This will install the dependencies. To start the local version of the project, r
 npm start
 ```
 
-Once you see, Your routes will be running on http://localhost:3000, then it means everything is ready. Navigate to that URL to begin using the proejct.
+Once you see, Your routes will be running on http://localhost:3000, then it means everything is ready. Navigate to that URL to begin using the project.
 
 ## Built With/Dependencies
 
